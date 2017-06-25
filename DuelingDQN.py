@@ -13,8 +13,6 @@ MAX_STEP = 500
 BATCH_SIZE = 32
 UPDATE_PERIOD = 200  # update target network parameters
 
-CLIP_NORM = None
-
 
 
 
@@ -93,14 +91,7 @@ class DeepQNetwork():
 
         with tf.variable_scope("train"):
             optimizer = tf.train.RMSPropOptimizer(0.001)
-            if CLIP_NORM :
-                gradients = optimizer.compute_gradients(self.loss)
-                for i , (g, v) in enumerate(gradients):
-                    if g is not None:
-                        gradients[i] = (tf.clip_by_norm(g , 10) , v)
-                self.train_op = optimizer.apply_gradients(gradients)
-            else:
-                self.train_op = optimizer.minimize(self.loss)    
+            self.train_op = optimizer.minimize(self.loss)    
     
     # training
     def train(self , state , reward , action , state_next , done):
