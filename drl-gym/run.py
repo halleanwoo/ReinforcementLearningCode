@@ -135,13 +135,6 @@ if __name__ == "__main__":
     else:
         args.flag_cnn = False
 
-    # set dir_path
-    if args.flag_save:
-        dir_path = str(int(time.time()))
-        path = str(os.getcwd())
-        new_path = path  + '/' + 'New_' + args.env_name + dir_path
-        os.makedirs(new_path)
-
     memory = Memory(args.memory_size, flag_piexl=args.flag_cnn)
 
     config = tf.ConfigProto()
