@@ -28,13 +28,11 @@ class Logger:
             self.result_iter[k] += 1
 
     def store_result(self, **kwargs):     # warning: kwargs must be a dict or using "="
-    # 当传入的kwargs没有时，就创建[];如果已经有了，就向里面append
         for k,v in kwargs.items():
             if not(k in self.result_dict.keys()):
                 self.result_dict[k] = []
                 self.result_iter[k] = 0
-                self.result_last_iter[k] = 0    # 每添加一个，实际上result_iter[k]存的是实际序号+1，比如序号为0，存的是1，作为上界正好取不到。
-                                                # 但是reveal_last函数中序号要使用 result_iter[k] - 1
+                self.result_last_iter[k] = 0    
             if not isinstance(v, np.ndarray):
                 v = np.array(v)
             self.result_dict[k].append(v)
@@ -126,12 +124,11 @@ class Logger:
                 space_num = key_list[key][0].size
                 # print(space_num)
                 file.write(str(key) + ",")
-                for j in range(space_num - 1):  # 如果是j是1，那么这个数只会写一次
+                for j in range(space_num - 1):  
                     file.write(" " + ",")
 
 
-    def reveal_all(self, *args):        # 注意：*args must be a str for dict's key, s.t. type str
-    # 当确定输出某个时，使用args传入；否则便是全部输出（或打印，或写入文件）
+    def reveal_all(self, *args):       
     	# reveal some results based on args
         if len(args) > 0:
             for key in args:
@@ -144,19 +141,18 @@ class Logger:
 
     def write_final(self, save_path=os.getcwd(), save_name='result_all.csv'):
         fl=open(save_path + '/' + save_name, 'w')
-        # 将最上面一行的name都写上了，多维的也已经留出空格
         for key in self.result_dict.keys():
             space_num = self.result_dict[key][0].size
             value_num = len(self.result_dict[key])
             # print(space_num)
             fl.write(str(key) + ",")
-            for j in range(space_num - 1):      # 如果是j是1，那么这个数只会写一次
+            for j in range(space_num - 1):      
                 fl.write(" " + ",")
         fl.write("\n")
-        # 接下来要写数据
+        # write value
         for iter_key in range(value_num):
             for key in self.result_dict.keys():
-                space_num = self.result_dict[key][0].size  # 先把第一个数写上，后面如果有，则继续写
+                space_num = self.result_dict[key][0].size  
                 if space_num == 1:
                     fl.write(str(self.result_dict[key][iter_key]) + ",")
                 else:
@@ -165,38 +161,6 @@ class Logger:
                         # print(str(self.result_dict[key][iter_key][j]))
             fl.write("\n")
         fl.close()
-
-        # if self.final_flag_title:
-        #     self._write_title(fl, self.scale_dict)
-        #     self._write_title(fl, self.result_dict)
-        #     fl.write("\n")
-        #     self.final_flag_title = 0
-
-        
-        # key_iter = list(self.scale_dict.keys())[-1]      # TODO: check
-        # for iter_key in range(len(self.scale_dict[key_iter])): 
-        #     for key in self.scale_dict.keys():
-        #         space_num = self.scale_dict[key][0].size  # 先把第一个数写上，后面如果有，则继续写
-        #         if space_num == 1:
-        #             fl.write(str(self.scale_dict[key][iter_key]) + ",")
-        #         else:
-        #             for j in range(space_num):
-        #                 fl.write(str(self.scale_dict[key][iter_key][j]) + ",") # TODO-error
-        #                 # print(str(self.result_dict[key][iter_key][j]))
-
-        # # key_iter = list(self.result_dict.keys())[-1] 
-        # # for iter_key in range(len(self.result_dict[key_iter])):
-        #     for key in self.result_dict.keys():
-        #         space_num = self.result_dict[key][0].size  # 先把第一个数写上，后面如果有，则继续写
-        #         if space_num == 1:
-        #             fl.write(str(self.result_dict[key][iter_key]) + ",")
-        #         else:
-        #             for j in range(space_num):
-        #                 fl.write(str(self.result_dict[key][iter_key][j]) + ",") # TODO-error
-        #                 # print(str(self.result_dict[key][iter_key][j]))
-        #     fl.write("\n")
-        # fl.close()
-
 
 
 # # 使用举例：
