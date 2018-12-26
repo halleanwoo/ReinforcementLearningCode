@@ -19,6 +19,7 @@ parser.add_argument("--batch_size", type=int, default=32)
 parser.add_argument("--learning_rate_Q", type=float, default=0.00025) #0.001
 
 parser.add_argument("--seed", type=int, default=11037)
+parser.add_argument("--env_seed", type=int, default=1234)
 
 parser.add_argument("--observe_step", type=int, default=50000)         # 50000                 150
 parser.add_argument("--explore_step", type=int, default=500000)     # 400000 1000000        10000
