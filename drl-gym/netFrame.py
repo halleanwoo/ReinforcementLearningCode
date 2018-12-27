@@ -1,3 +1,6 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import tensorflow as tf
 import tensorflow.contrib.layers as layers
 from argument import args
@@ -30,7 +33,7 @@ def net_frame_cnn_to_mlp(convs, hiddens, inpt, num_actions, scope, dueling=False
             for hidden in hiddens:
                 action_out = layers.fully_connected(action_out, num_outputs=hidden, activation_fn=None)
                 if layer_norm:
-                    action_out = layers.layer_norm(action_out, center=True, scale=True)    # normlization:这里使用的不是BN，而是LN
+                    action_out = layers.layer_norm(action_out, center=True, scale=True)   
                 action_out = tf.nn.relu(action_out)
             action_scores = layers.fully_connected(action_out, num_outputs=num_actions, activation_fn=None)
 

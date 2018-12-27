@@ -1,3 +1,6 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import tensorflow as tf
 import numpy as np
 import gym
@@ -9,10 +12,6 @@ from netFrame import net_frame_mlp, net_frame_cnn_to_mlp, build_net
 from memory import Memory
 from utils import *
 from argument import args
-
-
-
-SUMMARY_PERIOD = 200
 
 class DeepQNetwork4Atari():
     def __init__(self , scope_main, env, flag_double, flag_cnn, sess=None , gamma = 0.99):
@@ -95,7 +94,6 @@ class DeepQNetwork4Atari():
     def train(self, state, reward, action, state_next, done, episode_return, estim_Qvalue_argmax, estim_Qvalue_expect):
         q, q_target = self.sess.run([self.q_value, self.q_target], 
                                      feed_dict={self.inputs_q: state, self.inputs_target: state_next})
-
         # dqn
         if not self.flag_double:
             q_target_best = np.max(q_target, axis = 1)

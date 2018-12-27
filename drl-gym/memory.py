@@ -1,10 +1,12 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import tensorflow as tf
 import collections
 import numpy as np
 import random
 
 # memory for momery replay
-# memory = []
 Transition = collections.namedtuple("Transition" , ["state", "action", "reward", "next_state", "done", "episode_return"])
 class Memory:
     def __init__(self, size, flag_piexl=0):

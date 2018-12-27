@@ -1,3 +1,6 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import tensorflow as tf
 import random
 import numpy as np
@@ -17,7 +20,6 @@ def huber_loss(x, delta=1.0):
 
 
 def build_rmsprop_optimizer(learning_rate, rmsprop_decay, rmsprop_constant, gradient_clip, version, loss):
-
     with tf.name_scope('rmsprop'):
         optimizer = None
         if version == 'rmsprop':

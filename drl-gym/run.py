@@ -1,10 +1,13 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import tensorflow as tf
 import numpy as np
 import gym
 import os
 import time
 
-from testModel import testQGame # testQ, 
+from testModel import testQGame 
 from netFrame import net_frame_mlp, net_frame_cnn_to_mlp
 from utils import *
 from envWrapper import envMakeWrapper
@@ -32,7 +35,6 @@ def training(agent, env, flag_using_heu, file = None):
     test_reward_H = []
     test_every_H = []
     
-
     reward_episode = 0   #!!!!!
     ep_flag = 0
 
@@ -67,9 +69,6 @@ def training(agent, env, flag_using_heu, file = None):
                                                                            estim_Qvalue_expect=estim_Qvalue_expect,
 
                                                                          )
-                    # bat_s = np.mean(batch_state, axis=0)
-                    # bat_a = np.mean(batch_action, axis=0)
-
                 # if flag_summary:
                 #     agent.write_summary(state = batch_state ,
                 #                             reward = batch_reward , 
@@ -87,7 +86,6 @@ def training(agent, env, flag_using_heu, file = None):
                 agent.update_prmt()
                 
             if update_iter > args.observe_step and update_iter % 100 == 0 and update_iter != 0:
-                if update_iter > args.observe_step:
                     agent.decay_epsilon(update_iter - args.observe_step, args.explore_step)
 
             # episode or epoch, if episode: done --> break
@@ -120,10 +118,8 @@ def training(agent, env, flag_using_heu, file = None):
                 reward_all += reward_episode
                 reward_all_his.append(reward_all)
                 reward_episode = 0
-                
-                
             state = next_state
-    return reward_all_his, reward_every, estim_Qvalue_argmax, estim_Qvalue_expect, test_reward_all, test_every_average1_Q, test_every_each10_Q, test_reward_H, test_every_H
+    return reward_all_his, reward_every, test_reward_all, test_every_average1_Q, test_every_each10_Q
 
 
 if __name__ == "__main__":
@@ -151,5 +147,4 @@ if __name__ == "__main__":
             print("double-DQN" if args.flag_double_dqn else "DQN")
             print("*******************")
             DQN = DeepQNetwork4Atari(scope_name, env_1 , args.flag_double_dqn, args.flag_cnn, sess2)
-            reward_all_his, reward_every, estim_Qvalue_argmax, estim_Qvalue_expect, test_reward_all, test_every_average1_Q, test_every_each10_Q, test_reward_H, test_every_H = training(DQN, env_1, args.flag_double_dqn)
-            # write(args.env_name, new_path, flag_using_expect, reward_all_his, reward_every, estim_Qvalue_argmax, estim_Qvalue_expect, test_reward_all, test_every_average1_Q, test_every_each10_Q, test_reward_H, test_every_H)
+            reward_all_his, reward_every, test_reward_all, test_every_average1_Q, test_every_each10_Q= training(DQN, env_1, args.flag_double_dqn)

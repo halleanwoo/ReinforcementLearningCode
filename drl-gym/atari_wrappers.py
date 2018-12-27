@@ -1,3 +1,6 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import numpy as np
 import os
 os.environ.setdefault('PATH', '')
@@ -8,7 +11,6 @@ import cv2
 cv2.ocl.setUseOpenCL(False)
 
 class NoopResetEnv(gym.Wrapper):
-    # 执行空操作
     def __init__(self, env, noop_max=30):
         """Sample initial states by taking random number of no-ops on reset.
         No-op is assumed to be action 0.
@@ -109,7 +111,7 @@ class MaxAndSkipEnv(gym.Wrapper):
             obs, reward, done, info = self.env.step(action)
             if i == self._skip - 2: self._obs_buffer[0] = obs
             if i == self._skip - 1: self._obs_buffer[1] = obs
-            total_reward += reward                              # 可以用来处理奖励稀疏？
+            total_reward += reward                             
             if done:
                 break
         # Note that the observation on the done=True frame

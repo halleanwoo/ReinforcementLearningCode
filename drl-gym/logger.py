@@ -1,5 +1,13 @@
+#!usr/bin/env python3
+# -*- coding: utf-8 -*- 
+
 import numpy as np
 import os
+
+def write(file, value):
+    file = open(file_path, 'a')
+    if isinstance(value, int):
+        file.write()
 '''
 作用在于：
 store_resutl(): 进行数据储存；
@@ -95,14 +103,14 @@ class Logger:
             self.flag_title = 0
         # write value
         for key in self.scale_dict.keys():
-            space_num = self.scale_dict[key][0].size   # 先把第一个数写上，后面如果有，则继续写
+            space_num = self.scale_dict[key][0].size   
             if space_num == 1:
                 self.fl.write(str(self.scale_dict[key][self.result_iter[key]-1]) + ",")
             else:
                 for j in range(space_num):
                     self.fl.write(str(self.scale_dict[key][self.result_iter[key]-1][j]) + ",")
         for key in self.result_dict.keys():
-            space_num = self.result_dict[key][0].size   # 先把第一个数写上，后面如果有，则继续写
+            space_num = self.result_dict[key][0].size   
             if space_num == 1:
                 self.fl.write(str(np.mean(self.result_dict[key][-write_period:], axis=0)) + ",")
             else:
@@ -163,7 +171,7 @@ class Logger:
         fl.close()
 
 
-# # 使用举例：
+# # 使用测试：
 # Rcd = Logger()
 
 # for i in range(5):
