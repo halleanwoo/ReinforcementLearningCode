@@ -43,7 +43,7 @@ def training(agent, env, flag_using_heu, file = None):
         # env.render() 
 
         if episode != 0 and (episode + 1) % args.test_period == 0 and update_iter > args.observe_step:
-            test_reward_all, test_every_average1_Q, test_every_each10_Q = testQGame(args.env_name, agent, episode, test_reward_all, test_every_average1_Q, test_every_each10_Q, args.flag_cnn, args.max_step)  
+            test_reward_all, test_every_average1_Q, test_every_each10_Q = testQGame(args.env_name, agent, episode, test_reward_all, test_every_average1_Q, test_every_each10_Q, args.flag_cnn)  
 
         #training
         for step in range(args.max_step):

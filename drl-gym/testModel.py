@@ -6,8 +6,9 @@ import gym
 import random
 from envWrapper import envMakeWrapper
 
-def testQGame(env_name, agent, episode, test_reward_all_his, test_every_average1, test_every_each10, flag_cnn, max_step=10000, test_times=10):
+def testQGame(env_name, agent, episode, test_reward_all_his, test_every_average1, test_every_each10, flag_cnn, max_step=100000000, test_times=10):
     # print("testing_q...")
+    # TODO: remove the loop of "maxStep"
     env1 = envMakeWrapper(env_name, flag_cnn)
     if len(test_reward_all_his) is 0:
         test_reward_all = 0
